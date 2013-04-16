@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
     speed1 = 20;
     speed2 = 20;
     speed3 = 1000;
-    speed4 = 2500;
+    speed4 = 1250;
     counter1 = 1;
     counter2 = 1;
     counter3 = 1;
