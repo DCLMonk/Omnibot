@@ -67,7 +67,8 @@ const unsigned int speed[3][64] = {
 unsigned char currentSpeedIndex = 0;
 volatile unsigned char needsNewSpeed = FALSE;
 
-const unsigned char motorSpeed[256] = {0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08, 0x09};
+const unsigned char motorSpeed[256] = {0x03, 0x06, 0x0c, 0x09, 0x03, 0x06, 0x0c, 0x09},
+//{0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08, 0x09};
 
 unsigned char getMotorState(unsigned char state) {
     return motorSpeed[(int)(state & 0x07)];
@@ -161,10 +162,10 @@ int main(int argc, char* argv[]) {
 void setSpeed1(int speed) {
     if (speed > 0) {
         movingForward1 = 1;
-        speed1 = speed;
+        speed1 = speed * 2;
     } else {
         movingForward1 = 0;
-        speed1 = -speed;
+        speed1 = -speed * 2;
     }
 }
 
