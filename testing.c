@@ -203,7 +203,7 @@ char serBuf[SER_LEN];
 int serIndex = SER_LEN;
 
 void checkSerialSend() {
-    if ((serIndex < SER_LEN) && !(UCSRA & (1 << UDRE))) {
+    if ((serIndex < SER_LEN) && (UCSRA & (1 << UDRE))) {
         UDR = serBuf[serIndex++];
     }
 }
