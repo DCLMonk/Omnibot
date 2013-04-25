@@ -22,6 +22,7 @@ void serial_init(void);
 void send_char_serial (char data);
 char receive_char_serial (void);
 void send_string_serial(char* s);
+void checkSerialSend();
 
 void setSpeed3(int speed);
 void setSpeed2(int speed);
@@ -121,15 +122,11 @@ int main(int argc, char* argv[]) {
     motorState2 = getMotorState(currentState2) << 4;
     unsigned char state = getMotorState(currentState3);
     motorState3 = ((state & 0x0C) << 4) | (state & 0x03);
-    const char* send = "";
-    int sendIndex = 0;
 
     setupTimers();
 
     while (1) {
-        if ((send[sendIndex] != '\0') && send_char(send[sendIndex])) {
-            sendIndex++;
-        }
+        checkSerialSend();
         if (needState1) {
             currentState1 = getNextState(currentState1, movingForward1);
             motorState1 = getMotorState(currentState1);
@@ -148,6 +145,10 @@ int main(int argc, char* argv[]) {
         }
         if (needsNewSpeed) {
             currentSpeedIndex = (currentSpeedIndex + 1) & 0x3f;
+            if (currentSpeedIndex == 0x80) {
+                currentSpeedIndex = 0;
+                send_string_serial("Loop...\n");
+            }
             setSpeed1(speed[0][currentSpeedIndex]);
             setSpeed2(speed[1][currentSpeedIndex]);
             setSpeed3(speed[2][currentSpeedIndex]);
@@ -197,18 +198,29 @@ void serial_init(void) {
     char c = UDR; // to clear the RXC flag
 }
 
-int send_char_check(char data) {
-    if (!(UCSRA & (1 << UDRE))) {
-        return 1;
+#define SER_LEN 64
+char serBuf[SER_LEN];
+int serIndex = SER_LEN;
+
+void checkSerialSend() {
+    if ((serIndex < SER_LEN) && !(UCSRA & (1 << UDRE))) {
+        UDR = serBuf[serIndex++];
     }
-    return 0;
 }
 
 void send_char_serial (char data) {
     /* Wait for empty transmit buffer */
-    while (!(UCSRA & (1<<UDRE)));
+//    while (!(UCSRA & (1<<UDRE)));
     /* Put data into buffer, sends the data */
-    UDR = data;
+//    UDR = data;
+    
+    int i = 0;
+    for (i = serIndex - 1; i < (SER_LEN - 1); i++) {
+        serBuf[i] = serBuf[i + 1];
+    }
+    serBuf[SER_LEN - 1] = data;
+    serIndex--;
+
     //if (data == '\n') send_char_serial('\r');
     /* Wait for empty transmit buffer */
     //while (!(UCSRA & (1<<UDRE)));
@@ -222,10 +234,24 @@ char receive_char_serial (void) {
 }
 
 void send_string_serial(char* s) {
+    /*
     int i;
     for (i = 0; i < strlen(s); i++) {
          send_char_serial(s[i]);
     }
+    */
+    int i = 0;
+    int len = strlen(s);
+    for (i = serIndex - len; i < (SER_LEN - len); i++) {
+        serBuf[i] = serBuf[i + len];
+    }
+    int c = 0;
+    for (i = SER_LEN - len; i < (SER_LEN); i++) {
+        serBuf[i] = s[c++];
+    }
+
+    serIndex -= len;
+
     //send_char_serial('\n');
     //send_char_serial('\r');
 }
