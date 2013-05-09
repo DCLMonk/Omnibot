@@ -1,0 +1,149 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% TODO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% - Rewrite Intro
+%%% - Write usb_info.tex
+%%% - - Tyler Only
+%%% - Write project_overview.tex
+%%% - - Drafted by Monk Needs Figures
+%%% - Write hardware_design_testing.tex
+%%% - - Drafted by Monk Needs Figures
+%%% - Write software_design_testing.tex
+%%% - - Drafted by Monk Needs Figures
+%%% - Write results_conclusions.tex
+%%% - - Monk was last seen here
+%%% - Figure out what goes in appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}	% 12 pt font, report format
+
+
+%\evensidemargin 0.5in % Frantically trying to fix the margin!
+\usepackage[margin=1in]{geometry}
+
+%%
+%% Packages used for Thesis formating, postscript, etc.
+%%
+    %%
+    %% Most Theses will have these:
+    %%
+    \usepackage{graphicx}		% Required (if you need any graphics!)
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Added by Monk
+
+    %%
+    %% These packages are needed to support some of the advanced formatting
+    %% options in ch_advanced.tex
+    %%
+    \usepackage{longtable}		% Tables longer than one page
+    \usepackage{subfigure}		% Figures with sub-figures
+    \usepackage[figuresright]{rotating}	% Figures & Tables sideways on page
+    \usepackage{verbatim}      	        % Verbatim commands for inserting code
+    \usepackage{moreverb}      	        % More of the above
+    \usepackage{placeins}
+    \usepackage{textcomp}
+
+    %\LoadClass{report}
+    \usepackage{float}	  		% Added by Roger
+    \usepackage{listings}
+    \usepackage{caption}	        % Fixes bold captions under floats
+    \usepackage{url}
+	\usepackage{setspace}		% Added by Monk
+	\usepackage{pdfpages}		% Added by Monk
+
+    
+    %\usepackage{tocvsec2}
+    
+	\setcounter{totalnumber}{5}
+
+    
+    %%
+    %% These packages may be helpful while writing the thesis, but should
+    %% be commented out for the final version.
+    %%
+    %\usepackage{showkeys}	% Show the symbolic keys used for all 
+    				% \label, \ref, \cite, \pageref
+    
+    %%
+    %% The hyperref package supports document links for PDF output
+    %%
+%    \usepackage[colorlinks=true, 	% This should be the LAST package included
+%        	pdfstartview=FitV, 	% (It my redefine or modify commands in 
+%        	linkcolor=blue,		%  earlier packages)
+%        	citecolor=blue, 	%
+%		plainpages=false,
+%		pdfpagelabels=true,
+%        	urlcolor=blue]{hyperref}
+
+%%
+%% List here the files which should be recompiled on a given run.
+%% For example, when writing ch2.tex, use \includeonly{ch2}
+%% to compile only ch2.tex....  Latex will use the previously
+%% compiled versions of all other sections to figure out pg numbers etc.
+%%
+\includeonly{info,body}
+
+
+%%
+%% Change the "senior_project_info.tex" file to have the correct title, author, etc.
+%%
+
+\begin{document}
+    \include{info}
+    \pagestyle{empty}
+    \pagenumbering{alph}
+
+%\include{senior_project_info}
+%    \maketitle
+
+    \pagestyle{plain} 
+    \pagenumbering{roman}
+
+
+
+%%     {\singlespacing
+%% 	\pdfbookmark[0]{TABLE OF CONTENTS}{my_toc}
+% 	\tableofcontents
+% 	\listoftables
+% 	\listoffigures
+     \newpage \pagenumbering{arabic}
+%    \pdfbookmark[0]{TABLE OF CONTENTS}{my_toc}
+
+    %\let\myNumberline\numberline    % required to add Table and Figure text
+    %                                % to lof and lot
+    %\tableofcontents
+    %\renewcommand\numberline[1]{\myNumberline{Table #1:}}  % add "Table" text as required by grad school
+    %\listoftables
+    %\renewcommand\numberline[1]{\myNumberline{Figure #1:}} % add "Figure" text as required by grad school
+    %\listoffigures
+    %\renewcommand\numberline[1]{\myNumberline{#1}} % restore \numberline to the starting definition.
+    %} 
+    %\addtocontents{toc}{\protect{\vspace{1.5\baselineskip} \noindent Chapter}}
+    %\newpage \pagenumbering{arabic}
+
+	\onehalfspacing
+    \include{body}
+
+    {
+    \setcounter{page}{1}
+	%%
+	%% Select one of these bibliography styles.
+	%%
+	%\bibliographystyle{plain}	% LaTeX Default
+	%\bibliographystyle{alpha}	% Alphabetical Bibliography
+	\bibliographystyle{ieeetr}	% IEEE Standard (You may have to insist, but the Grad School has accepted this)
+	%\bibliographystyle{apa}	% American Psychology Association (cited in Thesis Guidelines)
+	%\bibliographystyle{cbe}	% Council of Biology Editors (cited in Thesis Guidelines)
+	%
+
+	%\settocdepth{chapter}				%Don't show section/sub/subsub etc in appendix
+    \appendix
+
+    \clearpage
+
+%    \pdfbookmark[0]{APPENDICES}{my_apps}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% Appendix
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
