@@ -88,7 +88,7 @@ PROJECTNAME=stepper
 # (list all files to compile, e.g. 'a.c b.cpp as.S'):
 # Use .cc, .cpp or .C suffix for C++ files, use .S 
 # (NOT .s !!!) for assembly source code files.
-PRJSRC=testing.c
+PRJSRC=robot.c
 #PRJSRC=atmega8_slave.c DeviceServer/ClientLib/DeviceClient.c DeviceServer/ClientLib/DeviceComm.c
 #PRJSRC=at90usb162_test.c DeviceServer/ClientLib/DeviceClient.c DeviceServer/ClientLib/DeviceComm.c
 
