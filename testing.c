@@ -97,9 +97,9 @@ int main(int argc, char* argv[]) {
     send_string_serial("Starting up...\n");
     _delay_ms(500);
 
-    speed1 = 20;
-    speed2 = 20;
-    speed3 = 1000;
+    speed1 = 4000;
+    speed2 = 4000;
+    speed3 = 4000;
     speed4 = 1250;
     counter1 = 1;
     counter2 = 1;
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
     needState3 = FALSE;
 
     movingForward1 = FALSE;
-    movingForward2 = TRUE;
+    movingForward2 = FALSE;
     movingForward3 = FALSE;
 
     currentState1 = 0;
@@ -125,7 +125,24 @@ int main(int argc, char* argv[]) {
 
     setupTimers();
 
+	char index = 0;
+	int speeds[3];
+	char* buffer = (char*) speeds;
+
     while (1) {
+		if  (UCSRA & (1<<RXC)) {
+			buffer[index++] = UDR;
+			
+			if (index == 6) {
+				// do something with the buffer
+				setSpeed1(speeds[0]);
+				setSpeed2(speeds[1]);
+				setSpeed3(speeds[2]);
+				index = 0;
+				send_string_serial("Received full message\n\r");
+			}
+		}
+
         checkSerialSend();
         if (needState1) {
             currentState1 = getNextState(currentState1, movingForward1);
@@ -143,9 +160,10 @@ int main(int argc, char* argv[]) {
             motorState3 = ((state & 0x0C) << 4) | (state & 0x03);
             needState3 = FALSE;
         }
+/*
         if (needsNewSpeed) {
-            currentSpeedIndex = (currentSpeedIndex + 1) & 0x3f;
-            if (currentSpeedIndex == 0x80) {
+            currentSpeedIndex = (currentSpeedIndex + 1);
+            if (currentSpeedIndex == 0x40) {
                 currentSpeedIndex = 0;
                 send_string_serial("Loop...\n");
             }
@@ -154,6 +172,7 @@ int main(int argc, char* argv[]) {
             setSpeed3(speed[2][currentSpeedIndex]);
             needsNewSpeed = FALSE;
         }
+*/
     }
 
 	return 0;
