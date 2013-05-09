@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical" >
+
+    <Button
+        android:id="@+id/fancy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fancy" />
+
+    <Button
+        android:id="@+id/simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/fancy"
+        android:text="Simple" />
+
+    <Button
+        android:id="@+id/irl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/simple"
+        android:text="IRL" />
+
+    <Button
+        android:id="@+id/tempest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/irl"
+        android:text="Tempest" />
+
+    <Button
+        android:id="@+id/custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tempest"
+        android:text="Custom IP" />
+
+</RelativeLayout>
